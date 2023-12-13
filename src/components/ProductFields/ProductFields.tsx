@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   productChange: (p: IProduct) => void;
-  product?: IProduct;
+  product?: IProduct | null;
 }
 
 export function ProductFields(props: Props) {
@@ -31,13 +31,21 @@ export function ProductFields(props: Props) {
   }, [title, priceString, description, category, image]);
 
   React.useEffect(() => {
-    if (props.product !== undefined) {
+    if (props.product !== undefined && props.product !== null) {
       setTitle(props.product.title)
       setPrice(props.product.price)
       setDescription(props.product.description)
       setCategory(props.product.category)
       setImage(props.product.image)
       setId(props.product.id)
+    }
+    else if (props.product === null) {
+      setTitle("")
+      setPrice(0)
+      setDescription("")
+      setCategory("")
+      setImage("")
+      setId("")
     }
   }, [props.product]);
 
