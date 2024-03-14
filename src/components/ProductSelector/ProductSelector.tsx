@@ -12,6 +12,7 @@ import { IProduct } from '../../models';
 
 interface Props {
   onProductChange: (p: IProduct) => void;
+  idProduct?: null | string;
 }
 
 export function ProductSelector(props: Props) {
@@ -30,14 +31,20 @@ export function ProductSelector(props: Props) {
     setIdProduct(event.target.value);
   };
 
+  React.useEffect(() => {
+    if (props.idProduct === null) {
+      setIdProduct("")
+    }
+  }, [props.idProduct]);
+
   return (
     <Box className="productSelector">
       <FormControl>
-        <InputLabel> product </InputLabel>
+        <InputLabel>product</InputLabel>
         <Select
           style={{ width: "220px" }}
           value={idProduct}
-          label="Titles"
+          label="product"
           onChange={handleChange}
         >
           {titles}

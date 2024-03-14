@@ -11,13 +11,14 @@ import { Alert } from '@mui/material';
 
 export function ChangeProduct() {
     const dispatch = useDispatch();
-    const [product, setProduct] = React.useState<IProduct>();
+    const [product, setProduct] = React.useState<IProduct | null>();
     const [changepPoduct, setChangepPoduct] = React.useState<IProduct>();
     const [showAlert, setShowAlert] = React.useState(false);
+    const [idProduct, setidProduct] = React.useState<string | null>(null);
 
     const handleProductChange = (product: IProduct) => {
         setProduct(product)
-        console.log("Product Change", product)
+        setidProduct(product.id)
     }
 
     const handleProductFieldsChange = (changepPoduct: IProduct) => {
@@ -29,12 +30,14 @@ export function ChangeProduct() {
         dispatch(productsSlice.actions.changeProduct(changepPoduct!));
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
+        setProduct(null)
+        setidProduct(null)
     }
 
     return (
         <div className="changeProduct">
             <MenuManagement></MenuManagement>
-            <ProductSelector onProductChange={handleProductChange} />
+            <ProductSelector onProductChange={handleProductChange} idProduct={idProduct} />
             <ProductFields productChange={handleProductFieldsChange} product={product}></ProductFields>
             <Button
                 variant="contained"
